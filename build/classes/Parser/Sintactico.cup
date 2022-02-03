@@ -1,0 +1,79 @@
+package Parser; 
+import java_cup.runtime.*;
+import Parser.Lexico;
+parser code 
+{:
+    /**
+     * Método al que se llama automáticamente ante algún error sintactico.
+     **/ 
+    public void syntax_error(Symbol s){ 
+        System.out.println("Error Sintáctico en la Línea " + (s.left) +
+        " Columna "+s.right+ ". No se esperaba este componente: " +s.value+"."); 
+    } 
+
+    /**
+     * Método al que se llama automáticamente ante algún error sintáctico 
+     * en el que ya no es posible una recuperación de errores.
+     **/ 
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{
+        System.out.println("Error síntactico irrecuperable en la Línea " + 
+        (s.left)+ " Columna "+s.right+". Componente " + s.value + 
+        " no reconocido."); 
+    }  
+:} 
+
+terminal String TODOS;
+terminal String CONJ;
+terminal String IDENTIFICADOR;
+terminal String SIMBOLO;
+terminal String HASTA;
+terminal String RESALTOLINEA, RECOMILLASIMPLE, RECOMILLASDOBLES;
+terminal String DOSPT, PTCOMA, ASIGN, LLAVEIZQ, LLAVEDER;
+terminal String CONCATENACION, DISYUNCION, KLEEN, CERRADURAMAS, CERRADURAINTER;
+terminal String SEPARADOR;
+terminal String ENTERO;
+terminal String DECIMAL;
+terminal String UMENOS;
+terminal String REVALUAR;
+
+non terminal inicio, instrucciones, instruccion, instr, regex;
+non terminal operacion, operaciones;
+
+start with inicio; 
+
+inicio::= LLAVEIZQ instr LLAVEDER;
+
+isntr::=
+    instruccion operaciones
+    | instruccion
+;
+
+instruccion ::= 
+    instrucciones instruccion
+    | instrucciones
+;
+
+instrucciones ::= 
+    CONJ DOSPT IDENTIFICADOR ASIGN SIMBOLO HASTA SIMBOLO PTCOMA
+    | IDENTIFICADOR ASIGN regex PTCOMA
+;
+
+operaciones ::=
+    operacion operaciones
+    | operacion
+;
+
+operacion ::=
+    SEPARADOR 
+    | IDENTIFICADOR DOSPT RECOMILLASDOBLES TODOS RECOMILLASDOBLES PTCOMA
+;
+
+regex::=
+    CONCATENACION regex regex
+    | DISYUNCION regex regex
+    | KLEEN regex
+    | CERRADURAMAS regex
+    | CERRADURAINTER regex
+    | LLAVEIZQ IDENTIFICADOR LLAVEDER
+    | RECOMILLASDOBLES TODOS RECOMILLASDOBLES
+;
