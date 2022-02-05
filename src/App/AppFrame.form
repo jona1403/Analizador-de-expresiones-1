@@ -21,11 +21,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Guardar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="GuardarItemActionPerformed"/>
+          </Events>
         </MenuItem>
         <MenuItem class="javax.swing.JMenuItem" name="GuardarComoItem">
           <Properties>
             <Property name="text" type="java.lang.String" value="Guardar como ..."/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="GuardarComoItemActionPerformed"/>
+          </Events>
         </MenuItem>
         <MenuItem class="javax.swing.JMenuItem" name="XMLItem">
           <Properties>
@@ -194,11 +200,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Generar Automatas"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AutomatasButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="EntradaButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Analizar Entrada"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EntradaButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
@@ -238,6 +250,9 @@
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
             <Component class="javax.swing.JTree" name="jTree1">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jTree1.setModel(new FileSystemModel(new File(&quot;C:\\Users\\HUGO\\Desktop\\ExpAnalyzer&quot;)));"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>

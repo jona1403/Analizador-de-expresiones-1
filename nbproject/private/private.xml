@@ -3,8 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/HUGO/Desktop/ExpAnalyzer/src/expanalyzer/ExpAnalyzer.java</file>
             <file>file:/C:/Users/HUGO/Desktop/ExpAnalyzer/src/App/AppFrame.java</file>
+            <file>file:/C:/Users/HUGO/Desktop/ExpAnalyzer/src/Parser/Lexico.jflex</file>
+            <file>file:/C:/Users/HUGO/Desktop/ExpAnalyzer/src/Parser/Sintactico.cup</file>
+            <file>file:/C:/Users/HUGO/Desktop/ExpAnalyzer/src/Arbol/Nodo.java</file>
         </group>
     </open-files>
 </project-private>

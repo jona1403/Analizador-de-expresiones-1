@@ -7,6 +7,9 @@ package Parser;
 
 import java_cup.runtime.*;
 import Parser.Lexico;
+import Arbol.Nodo;
+import App.AppFrame;
+import java.util.ArrayList;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -32,12 +35,12 @@ public class Sintactico extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\021\000\002\002\004\000\002\002\005\000\002\004" +
-    "\004\000\002\004\003\000\002\003\012\000\002\003\006" +
-    "\000\002\010\004\000\002\010\003\000\002\007\003\000" +
-    "\002\007\010\000\002\006\005\000\002\006\005\000\002" +
-    "\006\004\000\002\006\004\000\002\006\004\000\002\006" +
-    "\005\000\002\006\005" });
+    "\000\021\000\002\002\004\000\002\002\005\000\002\005" +
+    "\004\000\002\005\004\000\002\003\012\000\002\003\006" +
+    "\000\002\007\004\000\002\007\003\000\002\006\006\000" +
+    "\002\006\003\000\002\010\005\000\002\010\005\000\002" +
+    "\010\004\000\002\010\004\000\002\010\004\000\002\010" +
+    "\005\000\002\010\003" });
 
   /** Access to production table. */
   public short[][] production_table() {return _production_table;}
@@ -45,9 +48,45 @@ public class Sintactico extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\006\000\004\017\004\001\002\000\002\001\002\000" +
-    "\004\002\006\001\002\000\004\002\001\001\002\000\004" +
-    "\020\010\001\002\000\004\002\000\001\002" });
+    "\000\055\000\004\017\004\001\002\000\006\005\011\006" +
+    "\012\001\002\000\004\002\006\001\002\000\004\002\001" +
+    "\001\002\000\004\020\057\001\002\000\010\005\011\006" +
+    "\047\026\046\001\002\000\004\014\036\001\002\000\004" +
+    "\016\013\001\002\000\020\004\014\017\016\021\023\022" +
+    "\022\023\015\024\021\025\020\001\002\000\022\004\ufff1" +
+    "\015\ufff1\017\ufff1\021\ufff1\022\ufff1\023\ufff1\024\ufff1\025" +
+    "\ufff1\001\002\000\020\004\014\017\016\021\023\022\022" +
+    "\023\015\024\021\025\020\001\002\000\004\006\033\001" +
+    "\002\000\004\015\032\001\002\000\020\004\014\017\016" +
+    "\021\023\022\022\023\015\024\021\025\020\001\002\000" +
+    "\020\004\014\017\016\021\023\022\022\023\015\024\021" +
+    "\025\020\001\002\000\020\004\014\017\016\021\023\022" +
+    "\022\023\015\024\021\025\020\001\002\000\020\004\014" +
+    "\017\016\021\023\022\022\023\015\024\021\025\020\001" +
+    "\002\000\020\004\014\017\016\021\023\022\022\023\015" +
+    "\024\021\025\020\001\002\000\022\004\ufff7\015\ufff7\017" +
+    "\ufff7\021\ufff7\022\ufff7\023\ufff7\024\ufff7\025\ufff7\001\002" +
+    "\000\020\004\014\017\016\021\023\022\022\023\015\024" +
+    "\021\025\020\001\002\000\022\004\ufff6\015\ufff6\017\ufff6" +
+    "\021\ufff6\022\ufff6\023\ufff6\024\ufff6\025\ufff6\001\002\000" +
+    "\022\004\ufff4\015\ufff4\017\ufff4\021\ufff4\022\ufff4\023\ufff4" +
+    "\024\ufff4\025\ufff4\001\002\000\022\004\ufff3\015\ufff3\017" +
+    "\ufff3\021\ufff3\022\ufff3\023\ufff3\024\ufff3\025\ufff3\001\002" +
+    "\000\010\005\ufffc\006\ufffc\026\ufffc\001\002\000\004\020" +
+    "\034\001\002\000\022\004\ufff2\015\ufff2\017\ufff2\021\ufff2" +
+    "\022\ufff2\023\ufff2\024\ufff2\025\ufff2\001\002\000\022\004" +
+    "\ufff5\015\ufff5\017\ufff5\021\ufff5\022\ufff5\023\ufff5\024\ufff5" +
+    "\025\ufff5\001\002\000\004\006\037\001\002\000\004\016" +
+    "\040\001\002\000\004\007\041\001\002\000\004\010\042" +
+    "\001\002\000\004\007\043\001\002\000\004\015\044\001" +
+    "\002\000\010\005\ufffd\006\ufffd\026\ufffd\001\002\000\004" +
+    "\020\uffff\001\002\000\010\006\ufff8\020\ufff8\026\ufff8\001" +
+    "\002\000\006\014\054\016\013\001\002\000\004\020\ufffe" +
+    "\001\002\000\010\006\052\020\ufffa\026\046\001\002\000" +
+    "\004\014\054\001\002\000\004\020\ufffb\001\002\000\004" +
+    "\004\055\001\002\000\004\015\056\001\002\000\010\006" +
+    "\ufff9\020\ufff9\026\ufff9\001\002\000\004\002\000\001\002" +
+    "" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -55,9 +94,23 @@ public class Sintactico extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\006\000\004\002\004\001\001\000\004\005\006\001" +
+    "\000\055\000\004\002\004\001\001\000\006\003\007\005" +
+    "\006\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\012\003\007\005\044\006\050\007\047\001" +
+    "\001\000\002\001\001\000\002\001\001\000\004\010\016" +
+    "\001\001\000\002\001\001\000\004\010\034\001\001\000" +
+    "\002\001\001\000\002\001\001\000\004\010\030\001\001" +
+    "\000\004\010\027\001\001\000\004\010\025\001\001\000" +
+    "\004\010\023\001\001\000\004\010\024\001\001\000\002" +
+    "\001\001\000\004\010\026\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001" });
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\006\006\050\007\052\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\002\001\001\000\002\001\001" });
 
   /** Access to <code>reduce_goto</code> table. */
   public short[][] reduce_table() {return _reduce_table;}
@@ -163,20 +216,20 @@ class CUP$Sintactico$actions {
           return CUP$Sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 2: // instruccion ::= instrucciones instruccion 
+          case 2: // instr ::= instrucciones instr 
             {
               Object RESULT =null;
 
-              CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("instruccion",2, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
+              CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("instr",3, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 3: // instruccion ::= instrucciones 
+          case 3: // instr ::= instrucciones operaciones 
             {
               Object RESULT =null;
 
-              CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("instruccion",2, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
+              CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("instr",3, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
 
@@ -184,7 +237,10 @@ class CUP$Sintactico$actions {
           case 4: // instrucciones ::= CONJ DOSPT IDENTIFICADOR ASIGN SIMBOLO HASTA SIMBOLO PTCOMA 
             {
               Object RESULT =null;
-
+		int aleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-5)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-5)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-5)).value;
+		System.out.println("Conjunto "+a);
               CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("instrucciones",1, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-7)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
@@ -193,6 +249,47 @@ class CUP$Sintactico$actions {
           case 5: // instrucciones ::= IDENTIFICADOR ASIGN regex PTCOMA 
             {
               Object RESULT =null;
+		int aleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-3)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-3)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-3)).value;
+		int bleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).left;
+		int bright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).right;
+		Nodo b = (Nodo)((java_cup.runtime.Symbol) CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).value;
+		
+        AppFrame.primeros = new ArrayList<Integer>();
+        AppFrame.ultimos = new ArrayList<Integer>();
+        AppFrame.identificador++;
+        AppFrame.primeros.add(AppFrame.identificador);
+        AppFrame.ultimos.add(AppFrame.identificador);
+        Nodo c = new Nodo("#", AppFrame.identificador, false,AppFrame.primeros, AppFrame.ultimos, null, null);
+        AppFrame.identificador = 0;
+        
+
+
+        AppFrame.primeros = b.getPrimeros();
+        AppFrame.ultimos = new ArrayList<Integer>();    
+        boolean anul = false;
+        if(b.isAnulabilidad() && c.isAnulabilidad()){
+            anul = true;
+        }
+        if(b.isAnulabilidad()){
+            for(int i = 0; i<c.getPrimeros().size(); i++){
+                AppFrame.primeros.add(c.getPrimeros().get(i));
+            }
+        }
+        if(c.isAnulabilidad()){
+            AppFrame.ultimos = b.getUltimos();
+            for(int i = 0; i<c.getUltimos().size(); i++){
+                AppFrame.ultimos.add(c.getUltimos().get(i));
+            }
+        }else{
+            AppFrame.ultimos = c.getUltimos();
+        }
+        AppFrame.Arboles.put(a ,new Nodo(".", AppFrame.ContadorNodos--, anul, AppFrame.primeros, AppFrame.ultimos, b, c));
+
+
+  
+
 
               CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("instrucciones",1, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
@@ -203,7 +300,7 @@ class CUP$Sintactico$actions {
             {
               Object RESULT =null;
 
-              CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("operaciones",6, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
+              CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("operaciones",5, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
 
@@ -212,88 +309,193 @@ class CUP$Sintactico$actions {
             {
               Object RESULT =null;
 
-              CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("operaciones",6, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
+              CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("operaciones",5, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 8: // operacion ::= SEPARADOR 
+          case 8: // operacion ::= IDENTIFICADOR DOSPT TODOS PTCOMA 
             {
               Object RESULT =null;
 
-              CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("operacion",5, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
+              CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("operacion",4, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 9: // operacion ::= IDENTIFICADOR DOSPT RECOMILLASDOBLES TODOS RECOMILLASDOBLES PTCOMA 
+          case 9: // operacion ::= SEPARADOR 
             {
               Object RESULT =null;
 
-              CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("operacion",5, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-5)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
+              CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("operacion",4, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 10: // regex ::= CONCATENACION regex regex 
             {
-              Object RESULT =null;
+              Nodo RESULT =null;
+		int aleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-2)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-2)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-2)).value;
+		int bleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).left;
+		int bright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).right;
+		Nodo b = (Nodo)((java_cup.runtime.Symbol) CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).value;
+		int cleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()).left;
+		int cright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()).right;
+		Nodo c = (Nodo)((java_cup.runtime.Symbol) CUP$Sintactico$stack.peek()).value;
+		
+        AppFrame.primeros = b.getPrimeros();
+        AppFrame.ultimos = new ArrayList<Integer>();    
+        boolean anul = false;
+        if(b.isAnulabilidad() && c.isAnulabilidad()){
+            anul = true;
+        }
+        if(b.isAnulabilidad()){
+            for(int i = 0; i<c.getPrimeros().size(); i++){
+                AppFrame.primeros.add(c.getPrimeros().get(i));
+            }
+        }
+        if(c.isAnulabilidad()){
+            AppFrame.ultimos = b.getUltimos();
+            for(int i = 0; i<c.getUltimos().size(); i++){
+                AppFrame.ultimos.add(c.getUltimos().get(i));
+            }
+        }else{
+            AppFrame.ultimos = c.getUltimos();
+        }
+        RESULT = new Nodo(a, AppFrame.ContadorNodos--, anul, AppFrame.primeros, AppFrame.ultimos, b, c);
 
-              CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("regex",4, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
+              CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("regex",6, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 11: // regex ::= DISYUNCION regex regex 
             {
-              Object RESULT =null;
+              Nodo RESULT =null;
+		int aleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-2)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-2)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-2)).value;
+		int bleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).left;
+		int bright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).right;
+		Nodo b = (Nodo)((java_cup.runtime.Symbol) CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).value;
+		int cleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()).left;
+		int cright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()).right;
+		Nodo c = (Nodo)((java_cup.runtime.Symbol) CUP$Sintactico$stack.peek()).value;
+		
+        AppFrame.primeros = b.getPrimeros();
+        AppFrame.ultimos = b.getUltimos();
+        boolean anul = false;
+        if(b.isAnulabilidad() || c.isAnulabilidad()){
+            anul = true;
+        }
+        for(int i = 0; i<c.getPrimeros().size(); i++){
+            AppFrame.primeros.add(c.getPrimeros().get(i));
+        }
+        for(int i = 0; i<c.getUltimos().size(); i++){
+            AppFrame.ultimos.add(c.getUltimos().get(i));
+        }
 
-              CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("regex",4, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
+        RESULT = new Nodo(a, AppFrame.ContadorNodos--, anul, AppFrame.primeros, AppFrame.ultimos, b, c);
+
+              CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("regex",6, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 12: // regex ::= KLEEN regex 
             {
-              Object RESULT =null;
+              Nodo RESULT =null;
+		int aleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).value;
+		int bleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()).left;
+		int bright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()).right;
+		Nodo b = (Nodo)((java_cup.runtime.Symbol) CUP$Sintactico$stack.peek()).value;
+		
+        AppFrame.primeros = b.getPrimeros();
+        AppFrame.ultimos = b.getUltimos();
+        RESULT= new Nodo(a, AppFrame.ContadorNodos--, true, AppFrame.primeros, AppFrame.ultimos, null, b);    
 
-              CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("regex",4, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
+              CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("regex",6, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 13: // regex ::= CERRADURAMAS regex 
             {
-              Object RESULT =null;
+              Nodo RESULT =null;
+		int aleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).value;
+		int bleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()).left;
+		int bright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()).right;
+		Nodo b = (Nodo)((java_cup.runtime.Symbol) CUP$Sintactico$stack.peek()).value;
+		
+        AppFrame.primeros = b.getPrimeros();
+        AppFrame.ultimos = b.getUltimos();
+        boolean anul = b.isAnulabilidad();
+        RESULT= new Nodo(a, AppFrame.ContadorNodos--, anul, AppFrame.primeros, AppFrame.ultimos, null, b);
 
-              CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("regex",4, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
+              CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("regex",6, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 14: // regex ::= CERRADURAINTER regex 
             {
-              Object RESULT =null;
+              Nodo RESULT =null;
+		int aleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).value;
+		int bleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()).left;
+		int bright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()).right;
+		Nodo b = (Nodo)((java_cup.runtime.Symbol) CUP$Sintactico$stack.peek()).value;
+		
+        AppFrame.primeros = b.getPrimeros();
+        AppFrame.ultimos = b.getUltimos();
+        RESULT= new Nodo(a, AppFrame.ContadorNodos--, true, AppFrame.primeros, AppFrame.ultimos, null, b);
 
-              CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("regex",4, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
+              CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("regex",6, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 15: // regex ::= LLAVEIZQ IDENTIFICADOR LLAVEDER 
             {
-              Object RESULT =null;
-
-              CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("regex",4, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
+              Nodo RESULT =null;
+		int aleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).value;
+		
+        AppFrame.primeros = new ArrayList<Integer>();
+        AppFrame.ultimos = new ArrayList<Integer>();
+        AppFrame.identificador++;
+        AppFrame.primeros.add(AppFrame.identificador);
+        AppFrame.ultimos.add(AppFrame.identificador);
+        
+        RESULT = new Nodo(a, AppFrame.identificador, false,AppFrame.primeros, AppFrame.ultimos,null, null);
+              CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("regex",6, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 16: // regex ::= RECOMILLASDOBLES TODOS RECOMILLASDOBLES 
+          case 16: // regex ::= TODOS 
             {
-              Object RESULT =null;
-
-              CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("regex",4, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-2)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
+              Nodo RESULT =null;
+		int aleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$Sintactico$stack.peek()).value;
+		
+        AppFrame.primeros = new ArrayList<Integer>();
+        AppFrame.ultimos = new ArrayList<Integer>();
+        AppFrame.identificador++;
+        AppFrame.primeros.add(AppFrame.identificador);
+        AppFrame.ultimos.add(AppFrame.identificador);
+        
+        RESULT = new Nodo(a, AppFrame.identificador, false,AppFrame.primeros, AppFrame.ultimos,null, null);
+              CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("regex",6, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
 

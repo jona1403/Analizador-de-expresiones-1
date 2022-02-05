@@ -5,9 +5,20 @@
  */
 package App;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -17,8 +28,15 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author HUGO
  */
 public class AppFrame extends javax.swing.JFrame {
-    
+
     public static String path = "";
+    public static int Contadorfiles = 0;
+    public static int ContadorNodos = 0;
+    public static int identificador;
+    public static ArrayList<Integer> primeros;
+    public static ArrayList<Integer> ultimos;
+    public static Map<String, Arbol.Nodo> Arboles = new HashMap<String, Arbol.Nodo>();
+
     /**
      * Creates new form AppFrame
      */
@@ -70,9 +88,19 @@ public class AppFrame extends javax.swing.JFrame {
         ArchivoMenu.add(AbrirItem);
 
         GuardarItem.setText("Guardar");
+        GuardarItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GuardarItemActionPerformed(evt);
+            }
+        });
         ArchivoMenu.add(GuardarItem);
 
         GuardarComoItem.setText("Guardar como ...");
+        GuardarComoItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GuardarComoItemActionPerformed(evt);
+            }
+        });
         ArchivoMenu.add(GuardarComoItem);
 
         XMLItem.setText("Generar XML de salida");
@@ -95,8 +123,18 @@ public class AppFrame extends javax.swing.JFrame {
         jScrollPane1.setViewportView(CodeArea);
 
         AutomatasButton.setText("Generar Automatas");
+        AutomatasButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AutomatasButtonActionPerformed(evt);
+            }
+        });
 
         EntradaButton.setText("Analizar Entrada");
+        EntradaButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EntradaButtonActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Salida");
 
@@ -108,6 +146,7 @@ public class AppFrame extends javax.swing.JFrame {
 
         SiguienteButton.setText("Siguiente");
 
+        jTree1.setModel(new FileSystemModel(new File("C:\\Users\\HUGO\\Desktop\\ExpAnalyzer")));
         jScrollPane3.setViewportView(jTree1);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ver Imagenes", "Arboles", "Siguientes", "Transiciones", "Automatas" }));
@@ -201,31 +240,92 @@ public class AppFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_OptionsButtonActionPerformed
 
     private void AbrirItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AbrirItemMouseClicked
-        
+
     }//GEN-LAST:event_AbrirItemMouseClicked
 
     private void AbrirItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AbrirItemActionPerformed
-        JOptionPane.showMessageDialog(null, "Abriendo documento");
         JFileChooser fc = new JFileChooser();
         FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.TXT", "txt");
         fc.setFileFilter(filtro);
         int seleccion = fc.showOpenDialog(this);
-        if(seleccion == JFileChooser.APPROVE_OPTION){
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
             File fichero = fc.getSelectedFile();
             path = fichero.getAbsolutePath();
-            try(FileReader fr = new FileReader(fichero)){
+            try ( FileReader fr = new FileReader(fichero)) {
                 String cadena = "";
                 int valor = fr.read();
-                while(valor != -1){
-                    cadena = cadena +(char) valor;
+                while (valor != -1) {
+                    cadena = cadena + (char) valor;
                     valor = fr.read();
                 }
                 this.CodeArea.setText(cadena);
-            }catch(IOException el){
-               el.printStackTrace();
+            } catch (IOException el) {
+                el.printStackTrace();
             }
         }
     }//GEN-LAST:event_AbrirItemActionPerformed
+
+    private void GuardarComoItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarComoItemActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fc = new JFileChooser();
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.TXT", "txt");
+        fc.setFileFilter(filtro);
+        int seleccion = fc.showSaveDialog(this);
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            File fichero = fc.getSelectedFile();
+            try ( FileWriter fw = new FileWriter(fichero)) {
+                fw.write(this.CodeArea.getText());
+            } catch (IOException el) {
+                el.printStackTrace();
+            }
+        }
+        JOptionPane.showMessageDialog(null, "Documento Guardado exitosamente!");
+    }//GEN-LAST:event_GuardarComoItemActionPerformed
+
+    private void GuardarItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarItemActionPerformed
+        // TODO add your handling code here:
+        if (this.path != "") {
+            File fichero = new File(this.path);
+            try ( FileWriter fw = new FileWriter(fichero)) {
+                fw.write(this.CodeArea.getText());
+            } catch (IOException el) {
+                el.printStackTrace();
+            }
+            JOptionPane.showMessageDialog(null, "Documento Guardado exitosamente!");
+        } else {
+            JOptionPane.showMessageDialog(null, "Aun no existe una ruta predefinida");
+        }
+    }//GEN-LAST:event_GuardarItemActionPerformed
+
+    private void EntradaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EntradaButtonActionPerformed
+        try {
+            interpretar(CodeArea.getText());
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(AppFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_EntradaButtonActionPerformed
+
+    private void AutomatasButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AutomatasButtonActionPerformed
+        // TODO add your handling code here:
+        Grafica.Arbol gr = new Grafica.Arbol();
+        for (Iterator<Map.Entry<String, Arbol.Nodo>> entries = Arboles.entrySet().iterator(); entries.hasNext();) {
+            Map.Entry<String, Arbol.Nodo> entry = entries.next();
+            gr.dibujarArbol(entry.getValue());
+        }
+    }//GEN-LAST:event_AutomatasButtonActionPerformed
+
+    public void interpretar(String Cadena) throws FileNotFoundException {
+        Reader input = new StringReader(Cadena);
+        BufferedReader reader = new BufferedReader(input);
+        Parser.Sintactico pars;
+        try {
+            pars = new Parser.Sintactico(new Parser.Lexico(reader));
+            pars.parse();
+        } catch (Exception ex) {
+            System.out.println("Error fatal en compilación de entrada OLC.");
+            System.out.println("Causa: " + ex.getCause());
+        }
+    }
 
     /**
      * @param args the command line arguments

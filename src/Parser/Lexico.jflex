@@ -17,7 +17,8 @@ import java_cup.runtime.Symbol;
 BLANCOS=[ \r\t]+
 D=[0-9]+
 DD=[0-9]+("."[  |0-9]+)?
-ID = [A-Za-z0-9_-]+
+LETR = [A-Za-z0-9]
+ID =   [A-Za-z0-9_-]+
 T = \"([^\"])*\"
 CMUL = \<\!([^\"])*\!\>
 CUL = (\/)(\/)(.)*
@@ -27,11 +28,9 @@ CS = (\\)(\')
 CD = (\\)(\")
 CONCAT = (\.) 
 
-LETR = [A-Za-z0-9]
 
 %%
 
-"Evaluar" {return new Symbol(sym.REVALUAR,yyline,yychar,yytext());} 
 "CONJ" {return new Symbol(sym.CONJ,yyline,yychar,yytext());} 
 ":" {return new Symbol(sym.DOSPT,yyline,yychar,yytext());}
 ";" {return new Symbol(sym.PTCOMA,yyline,yychar,yytext());}
@@ -46,6 +45,7 @@ LETR = [A-Za-z0-9]
 \n {yychar=1;}
 
 {BLANCOS} {} 
+{LETR} {return new Symbol(sym.SIMBOLO,yyline,yychar, yytext());}
 {ID} {return new Symbol(sym.IDENTIFICADOR,yyline,yychar,yytext());}
 
 {D} {return new Symbol(sym.ENTERO,yyline,yychar, yytext());} 
@@ -60,7 +60,6 @@ LETR = [A-Za-z0-9]
 {CS} {return new Symbol(sym.RECOMILLASIMPLE,yyline,yychar, yytext());}
 {CD} {return new Symbol(sym.RECOMILLASDOBLES,yyline,yychar, yytext());}
 {CONCAT} {return new Symbol(sym.CONCATENACION,yyline,yychar, yytext());}
-{LETR} {return new Symbol(sym.SIMBOLO,yyline,yychar, yytext());}
 
 {CUL} {}
  
