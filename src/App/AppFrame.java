@@ -5,6 +5,8 @@
  */
 package App;
 
+import Tabla.Siguiente;
+import Tabla.Table;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -36,6 +38,9 @@ public class AppFrame extends javax.swing.JFrame {
     public static ArrayList<Integer> primeros;
     public static ArrayList<Integer> ultimos;
     public static Map<String, Arbol.Nodo> Arboles = new HashMap<String, Arbol.Nodo>();
+    public static Map<String, ArrayList<Tabla.Siguiente>> TablasSigPos = new HashMap<String, ArrayList<Tabla.Siguiente>>();
+    public static ArrayList<Tabla.Siguiente> siguientes;
+    public static ArrayList<Integer> auxiliarSigpor;
 
     /**
      * Creates new form AppFrame
@@ -310,8 +315,22 @@ public class AppFrame extends javax.swing.JFrame {
         Grafica.Arbol gr = new Grafica.Arbol();
         for (Iterator<Map.Entry<String, Arbol.Nodo>> entries = Arboles.entrySet().iterator(); entries.hasNext();) {
             Map.Entry<String, Arbol.Nodo> entry = entries.next();
-            gr.dibujarArbol(entry.getValue());
+            gr.dibujarArbol(entry.getValue(), entry.getKey());
+            entry.getValue().GenerateSiguientes();
+            TablasSigPos.put(entry.getKey(), siguientes);
         }
+        for (Iterator<Map.Entry<String, ArrayList<Tabla.Siguiente>>> entries = TablasSigPos.entrySet().iterator(); entries.hasNext();) {
+            Map.Entry<String, ArrayList<Tabla.Siguiente>> entry = entries.next();
+            System.out.println(entry.getKey());
+            for(int w = 0; w <entry.getValue().size(); w++){
+                System.out.print(entry.getValue().get(w).getIdentificador());
+                for(int a = 0; a <entry.getValue().get(w).getSigPos().size(); a++){
+                    System.out.print("-"+entry.getValue().get(w).getSigPos().get(a));
+                }
+                System.out.println("");
+            }
+        }
+
     }//GEN-LAST:event_AutomatasButtonActionPerformed
 
     public void interpretar(String Cadena) throws FileNotFoundException {

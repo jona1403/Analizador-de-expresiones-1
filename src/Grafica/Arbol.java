@@ -13,6 +13,10 @@ import java.io.PrintWriter;
  * @author HUGO
  */
 public class Arbol {
+
+    public Arbol() {
+    }
+    
     public String texto(Nodo nodo){
         String txt = "";
         if(nodo != null){
@@ -67,12 +71,12 @@ public class Arbol {
         return txt;
     }
     
-    public void writeFile(String txt){
+    public void writeFile(String txt, String nombre){
         FileWriter fichero = null;
         PrintWriter pw = null;
         try{
             AppFrame.Contadorfiles++;
-            fichero = new FileWriter("ARBOLES_201903004\\arbol"+String.valueOf(AppFrame.Contadorfiles)+".dot");
+            fichero = new FileWriter("ARBOLES_201903004\\arbol"+nombre+".dot");
             pw = new PrintWriter(fichero);
             pw.write(txt);
             pw.close();
@@ -86,11 +90,11 @@ public class Arbol {
         }
     }
     
-    public void dibujarArbol(Nodo nodo){
+    public void dibujarArbol(Nodo nodo, String Nombre){
         try{
-            writeFile(grafo(nodo));
+            writeFile(grafo(nodo), Nombre);
             ProcessBuilder proceso;
-            proceso = new ProcessBuilder("dot", "-Tpng", "-o", "ARBOLES_201903004\\arbol"+String.valueOf(AppFrame.Contadorfiles)+".png", "ARBOLES_201903004\\arbol"+String.valueOf(AppFrame.Contadorfiles)+".dot");
+            proceso = new ProcessBuilder("dot", "-Tpng", "-o", "ARBOLES_201903004\\arbol"+Nombre+".png", "ARBOLES_201903004\\arbol"+Nombre+".dot");
             proceso.redirectErrorStream(true);
             proceso.start();
         }catch(Exception e){

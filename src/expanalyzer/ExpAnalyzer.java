@@ -5,6 +5,7 @@
  */
 package expanalyzer;
 import App.AppFrame;
+import java.util.ArrayList;
 /**
  *
  * @author HUGO
