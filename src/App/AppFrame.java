@@ -313,24 +313,15 @@ public class AppFrame extends javax.swing.JFrame {
     private void AutomatasButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AutomatasButtonActionPerformed
         // TODO add your handling code here:
         Grafica.Arbol gr = new Grafica.Arbol();
+        Grafica.TablaSig ts = new Grafica.TablaSig();
         for (Iterator<Map.Entry<String, Arbol.Nodo>> entries = Arboles.entrySet().iterator(); entries.hasNext();) {
             Map.Entry<String, Arbol.Nodo> entry = entries.next();
             gr.dibujarArbol(entry.getValue(), entry.getKey());
             entry.getValue().GenerateSiguientes();
             TablasSigPos.put(entry.getKey(), siguientes);
+            ts.dibujarTabla(entry.getKey(), siguientes);
+            
         }
-        for (Iterator<Map.Entry<String, ArrayList<Tabla.Siguiente>>> entries = TablasSigPos.entrySet().iterator(); entries.hasNext();) {
-            Map.Entry<String, ArrayList<Tabla.Siguiente>> entry = entries.next();
-            System.out.println(entry.getKey());
-            for(int w = 0; w <entry.getValue().size(); w++){
-                System.out.print(entry.getValue().get(w).getIdentificador());
-                for(int a = 0; a <entry.getValue().get(w).getSigPos().size(); a++){
-                    System.out.print("-"+entry.getValue().get(w).getSigPos().get(a));
-                }
-                System.out.println("");
-            }
-        }
-
     }//GEN-LAST:event_AutomatasButtonActionPerformed
 
     public void interpretar(String Cadena) throws FileNotFoundException {
