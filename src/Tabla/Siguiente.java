@@ -14,10 +14,16 @@ import java.util.ArrayList;
 public class Siguiente {
     private int identificador;
     private ArrayList<Integer> SigPos;
+    private String Nombre;
 
-    public Siguiente(int identificador, ArrayList<Integer> sig) {
+    public Siguiente(String Nombre,int identificador, ArrayList<Integer> sig) {
+        this.Nombre = Nombre;
         this.identificador = identificador;
         this.SigPos = sig;
+    }
+
+    public String getNombre() {
+        return Nombre;
     }
 
     public void setSigPos(int id){

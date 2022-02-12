@@ -35,6 +35,7 @@ public class AppFrame extends javax.swing.JFrame {
     public static int Contadorfiles = 0;
     public static int ContadorNodos = 0;
     public static int identificador;
+    public static String aux = "";
     public static ArrayList<Integer> primeros;
     public static ArrayList<Integer> ultimos;
     public static Map<String, Arbol.Nodo> Arboles = new HashMap<String, Arbol.Nodo>();

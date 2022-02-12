@@ -23,9 +23,10 @@ public class TablaSig {
         txt +=  " digraph html {\n" +
                 "abc [shape=none, margin=0, label=<\n" +
                 "<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLSPACING=\"0\" CELLPADDING=\"4\">"
-                + "<tr><td>HOJA</td><td>SIGUIENTES</td></tr>";
+                + "<tr><td>HOJA</td><td>HOJA</td><td>SIGUIENTES</td></tr>";
         for(int i = 0; i< lista.size(); i++){
-            txt+="<tr><td>"+String.valueOf(lista.get(i).getIdentificador())+"</td>";
+            txt+="<tr><td>"+lista.get(i).getNombre()+"</td>";
+            txt+="<td>"+String.valueOf(lista.get(i).getIdentificador())+"</td>";
             txt+="<td>"+lista.get(i).getSigPos()+"</td></tr>";
         }
         txt+= "</TABLE>>];\n" +

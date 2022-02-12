@@ -88,54 +88,70 @@ public class Nodo {
     public void setDerecha(Nodo Derecha) {
         this.Derecha = Derecha;
     }
-    
-    public void GenerateSiguientes(){
+
+    public void GenerateSiguientes() {
         App.AppFrame.siguientes = new ArrayList<Tabla.Siguiente>();
-        for(int i = 1; i <= this.Derecha.Identificador; i++){
+        for (int i = 1; i <= this.Derecha.Identificador; i++) {
             App.AppFrame.auxiliarSigpor = new ArrayList<Integer>();
             GenerateSiguientes(this, i);
-            App.AppFrame.siguientes.add(new Siguiente(i, App.AppFrame.auxiliarSigpor));
+            Nom(this, i);
+            System.out.println(App.AppFrame.aux);
+            App.AppFrame.siguientes.add(new Siguiente(App.AppFrame.aux, i, App.AppFrame.auxiliarSigpor));
         }
     }
-    
-    private boolean YaExiste(int index){
-        for(int i = 0; i < App.AppFrame.auxiliarSigpor.size(); i++){
-            if(AppFrame.auxiliarSigpor.get(i).equals(index)){
+
+    private boolean YaExiste(int index) {
+        for (int i = 0; i < App.AppFrame.auxiliarSigpor.size(); i++) {
+            if (AppFrame.auxiliarSigpor.get(i).equals(index)) {
                 return true;
             }
         }
         return false;
     }
-    
-    private void GenerateSiguientes(Nodo nodo, int index){
-        if(nodo != null){
+
+    private void Nom(Nodo nodo, int index) {
+        if (nodo != null) {
+            Nom(nodo.getIzquierda(), index);
+
+            if (nodo.Identificador > 0) {
+                if (nodo.getIdentificador() == index) {
+                    App.AppFrame.aux = nodo.getValor();
+                    return;
+                }
+
+            }
+
+            Nom(nodo.getDerecha(), index);
+        }
+    }
+
+    private void GenerateSiguientes(Nodo nodo, int index) {
+        if (nodo != null) {
             this.GenerateSiguientes(nodo.getIzquierda(), index);
-            if(nodo.Derecha != null){
-                
-                
-                if(nodo.getValor().equals(".")){
-                    for(int i = 0; i < nodo.getIzquierda().getUltimos().size(); i++){
-                        if(nodo.getIzquierda().getUltimos().get(i)== index){
-                            for(int j = 0; j<nodo.getDerecha().getPrimeros().size(); j++){
-                                if(!YaExiste(nodo.getDerecha().getPrimeros().get(j))){
+            if (nodo.Derecha != null) {
+
+                if (nodo.getValor().equals(".")) {
+                    for (int i = 0; i < nodo.getIzquierda().getUltimos().size(); i++) {
+                        if (nodo.getIzquierda().getUltimos().get(i) == index) {
+                            for (int j = 0; j < nodo.getDerecha().getPrimeros().size(); j++) {
+                                if (!YaExiste(nodo.getDerecha().getPrimeros().get(j))) {
                                     App.AppFrame.auxiliarSigpor.add(nodo.getDerecha().getPrimeros().get(j));
                                 }
                             }
                         }
                     }
-                }else if(nodo.getValor().equals("*") || nodo.getValor().equals("+")){
-                    for(int i = 0; i< nodo.getDerecha().getUltimos().size(); i++){
-                        if(nodo.getDerecha().getUltimos().get(i) == index){
-                            for(int j = 0; j<nodo.getDerecha().getPrimeros().size(); j++){
-                                if(!YaExiste(nodo.getDerecha().getPrimeros().get(j))){
+                } else if (nodo.getValor().equals("*") || nodo.getValor().equals("+")) {
+                    for (int i = 0; i < nodo.getDerecha().getUltimos().size(); i++) {
+                        if (nodo.getDerecha().getUltimos().get(i) == index) {
+                            for (int j = 0; j < nodo.getDerecha().getPrimeros().size(); j++) {
+                                if (!YaExiste(nodo.getDerecha().getPrimeros().get(j))) {
                                     App.AppFrame.auxiliarSigpor.add(nodo.getDerecha().getPrimeros().get(j));
                                 }
                             }
                         }
                     }
                 }
-                
-                
+
             }
             this.GenerateSiguientes(nodo.getDerecha(), index);
         }
