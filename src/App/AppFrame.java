@@ -7,6 +7,7 @@ package App;
 
 import Tabla.Siguiente;
 import Tabla.Table;
+import Transiciones.TablaTrans;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -35,6 +36,7 @@ public class AppFrame extends javax.swing.JFrame {
     public static int Contadorfiles = 0;
     public static int ContadorNodos = 0;
     public static int identificador;
+    public static int contadoraux = 0;
     public static String aux = "";
     public static ArrayList<Integer> primeros;
     public static ArrayList<Integer> ultimos;
@@ -42,6 +44,8 @@ public class AppFrame extends javax.swing.JFrame {
     public static Map<String, ArrayList<Tabla.Siguiente>> TablasSigPos = new HashMap<String, ArrayList<Tabla.Siguiente>>();
     public static ArrayList<Tabla.Siguiente> siguientes;
     public static ArrayList<Integer> auxiliarSigpor;
+    public static ArrayList<Transiciones.TablaTrans> transTable;
+    public static ArrayList<Transiciones.Estado> estados;
 
     /**
      * Creates new form AppFrame
@@ -315,16 +319,31 @@ public class AppFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         Grafica.Arbol gr = new Grafica.Arbol();
         Grafica.TablaSig ts = new Grafica.TablaSig();
+        Transiciones.TablaTrans tbl = new TablaTrans();
         for (Iterator<Map.Entry<String, Arbol.Nodo>> entries = Arboles.entrySet().iterator(); entries.hasNext();) {
+            contadoraux = 0;
             Map.Entry<String, Arbol.Nodo> entry = entries.next();
             gr.dibujarArbol(entry.getValue(), entry.getKey());
             entry.getValue().GenerateSiguientes();
             TablasSigPos.put(entry.getKey(), siguientes);
             ts.dibujarTabla(entry.getKey(), siguientes);
             
+            tbl.setNombre(entry.getKey());
+            tbl.setTerms(entry.getValue().getTerms());
+            tbl.calcTrans(entry.getValue().getPrimeros(), siguientes);
+            System.out.println("");
+            System.out.println(entry.getKey());
+            for(int i = 0; i < tbl.getEstados().size(); i++){
+                System.out.println(tbl.getEstados().get(i).getNombre()+"   "+tbl.getEstados().get(i).getLista()+"   "+tbl.getEstados().get(i).getTerminales());
+            }
+            tbl = new TablaTrans();
         }
     }//GEN-LAST:event_AutomatasButtonActionPerformed
 
+    private void getEstados(){
+        
+    }
+    
     public void interpretar(String Cadena) throws FileNotFoundException {
         Reader input = new StringReader(Cadena);
         BufferedReader reader = new BufferedReader(input);

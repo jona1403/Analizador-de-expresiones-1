@@ -22,6 +22,7 @@ public class Nodo {
     private ArrayList<Integer> Ultimos;
     private Nodo Izquierda;
     private Nodo Derecha;
+    private ArrayList<String> terms;
 
     public Nodo(String Valor, int Identificador, boolean Anulabilidad, ArrayList<Integer> Primeros, ArrayList<Integer> Ultimos, Nodo Izquierda, Nodo Derecha) {
         this.Valor = Valor;
@@ -33,6 +34,36 @@ public class Nodo {
         this.Derecha = Derecha;
     }
 
+    public ArrayList<String> getTerms(){
+        this.terms = new ArrayList<String>();
+        getTerms(this);
+        return this.terms;
+    }
+    
+    private boolean YaIngresado(String value){
+        for(int i = 0; i < this.terms.size(); i++){
+            if(terms.get(i).equals(value)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private void getTerms(Nodo nodo){
+        if(nodo != null){
+            getTerms(nodo.getIzquierda());
+            
+            if(nodo.getDerecha() == null && nodo.getIzquierda() == null){
+                if(!YaIngresado(nodo.getValor())){
+                    terms.add(nodo.getValor());
+                }
+            }
+            
+            getTerms(nodo.getDerecha());
+        }
+    }
+    
+    
     public String getValor() {
         return Valor;
     }
@@ -95,7 +126,7 @@ public class Nodo {
             App.AppFrame.auxiliarSigpor = new ArrayList<Integer>();
             GenerateSiguientes(this, i);
             Nom(this, i);
-            System.out.println(App.AppFrame.aux);
+            //System.out.println(App.AppFrame.aux);
             App.AppFrame.siguientes.add(new Siguiente(App.AppFrame.aux, i, App.AppFrame.auxiliarSigpor));
         }
     }
