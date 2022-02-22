@@ -59,6 +59,21 @@ public class TablaTrans {
         return "--";
     }
 
+    private void AddTr(ArrayList<Integer> estad, ArrayList<Integer> termino){
+        ArrayList<String> aux = new ArrayList<>();
+        Estado est;
+        for(int i = 0; i < this.estados.size(); i++){
+            if(this.estados.get(i).getLista().equals(estad)){
+                aux = this.estados.get(i).getTerminales();
+                aux.add(Existen(termino));
+                est = this.estados.get(i);
+                est.setTerminales(aux);
+                this.estados.set(i, est);
+                return;
+            }
+        }
+    }
+    
     public void calcTrans(ArrayList<Integer> inicial, ArrayList<Tabla.Siguiente> siguientes) {
         ArrayList<ArrayList<Integer>> auxarray = new ArrayList<ArrayList<Integer>>();
         int aux = 0;
@@ -82,16 +97,21 @@ public class TablaTrans {
                     auxarray.add(auxiliar);
                     auxiliar = new ArrayList<Integer>();
                 }
+                //Linea a revisar
+                auxiliar = new ArrayList<Integer>();
 
             }
             auxarray.remove(0);
         }
         
-        
+             
+        auxarray = new ArrayList<ArrayList<Integer>>();
+        aux = 0;
+        Stringaux = new ArrayList<>();
+        auxiliar = new ArrayList<>();
         auxarray.add(inicial);
         while (auxarray.size() > 0) {
-            //this.estados.add(new Estado("S" + String.valueOf(App.AppFrame.contadoraux++), auxarray.get(auxarray.size() - 1)));
-            for (int i = 0; i < this.terms.size(); i++) {
+            for (int i = 0; i < this.terms.size()-1; i++) {
                 for (int j = 0; j < auxarray.get(0).size(); j++) {
                     if (siguientes.get(auxarray.get(0).get(j) - 1).getNombre().equals(this.terms.get(i))) {
                         for (int w = 0; w < siguientes.get(auxarray.get(0).get(j) - 1).getSigPos().size(); w++) {
@@ -102,22 +122,17 @@ public class TablaTrans {
                     }
                 }
                 //Aqui se agregan l
-                for(int j = 0; j< this.estados.size(); j++){
-                    if(this.estados.get(j).getLista().equals(auxarray.get(0))){
-                        Estado est = this.estados.get(j);
-                        est.terminales.add(Existen(auxiliar));
-                        this.estados.set(j, est);
-                    }
-                }
+                AddTr(auxarray.get(0), auxiliar);
                 if (!YaExisten(auxiliar, auxarray) && auxiliar.size() > 0) {
                     auxarray.add(auxiliar);
                     auxiliar = new ArrayList<Integer>();
                 }
+                
+                auxiliar = new ArrayList<Integer>();
 
             }
             auxarray.remove(0);
         }        
-        
  
         
     }

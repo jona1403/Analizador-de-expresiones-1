@@ -42,9 +42,10 @@ public class AppFrame extends javax.swing.JFrame {
     public static ArrayList<Integer> ultimos;
     public static Map<String, Arbol.Nodo> Arboles = new HashMap<String, Arbol.Nodo>();
     public static Map<String, ArrayList<Tabla.Siguiente>> TablasSigPos = new HashMap<String, ArrayList<Tabla.Siguiente>>();
+    public static Map<String, Transiciones.TablaTrans> TablasTR = new HashMap<String, Transiciones.TablaTrans>();
     public static ArrayList<Tabla.Siguiente> siguientes;
     public static ArrayList<Integer> auxiliarSigpor;
-    public static ArrayList<Transiciones.TablaTrans> transTable;
+    //public static ArrayList<Transiciones.TablaTrans> transTable;
     public static ArrayList<Transiciones.Estado> estados;
 
     /**
@@ -319,7 +320,9 @@ public class AppFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         Grafica.Arbol gr = new Grafica.Arbol();
         Grafica.TablaSig ts = new Grafica.TablaSig();
+        Grafica.TablaTrans tr = new Grafica.TablaTrans();
         Transiciones.TablaTrans tbl = new TablaTrans();
+        
         for (Iterator<Map.Entry<String, Arbol.Nodo>> entries = Arboles.entrySet().iterator(); entries.hasNext();) {
             contadoraux = 0;
             Map.Entry<String, Arbol.Nodo> entry = entries.next();
@@ -331,11 +334,8 @@ public class AppFrame extends javax.swing.JFrame {
             tbl.setNombre(entry.getKey());
             tbl.setTerms(entry.getValue().getTerms());
             tbl.calcTrans(entry.getValue().getPrimeros(), siguientes);
-            System.out.println("");
-            System.out.println(entry.getKey());
-            for(int i = 0; i < tbl.getEstados().size(); i++){
-                System.out.println(tbl.getEstados().get(i).getNombre()+"   "+tbl.getEstados().get(i).getLista()+"   "+tbl.getEstados().get(i).getTerminales());
-            }
+            TablasTR.put(entry.getKey(), tbl);
+            tr.dibujarTabla(entry.getKey(), tbl);
             tbl = new TablaTrans();
         }
     }//GEN-LAST:event_AutomatasButtonActionPerformed

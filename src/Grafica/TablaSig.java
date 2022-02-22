@@ -17,7 +17,7 @@ public class TablaSig {
 
     public TablaSig() {
     }
-    
+
     private String grafo(ArrayList<Tabla.Siguiente> lista){
         String txt = "";
         txt +=  " digraph html {\n" +
