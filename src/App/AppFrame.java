@@ -321,6 +321,7 @@ public class AppFrame extends javax.swing.JFrame {
         Grafica.Arbol gr = new Grafica.Arbol();
         Grafica.TablaSig ts = new Grafica.TablaSig();
         Grafica.TablaTrans tr = new Grafica.TablaTrans();
+        Grafica.AFD grafd = new Grafica.AFD();
         Transiciones.TablaTrans tbl = new TablaTrans();
         
         for (Iterator<Map.Entry<String, Arbol.Nodo>> entries = Arboles.entrySet().iterator(); entries.hasNext();) {
@@ -336,6 +337,7 @@ public class AppFrame extends javax.swing.JFrame {
             tbl.calcTrans(entry.getValue().getPrimeros(), siguientes);
             TablasTR.put(entry.getKey(), tbl);
             tr.dibujarTabla(entry.getKey(), tbl);
+            grafd.dibujarArbol(tbl, entry.getValue().getDerecha().getIdentificador(), entry.getKey());
             tbl = new TablaTrans();
         }
     }//GEN-LAST:event_AutomatasButtonActionPerformed
