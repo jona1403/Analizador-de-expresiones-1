@@ -1,6 +1,6 @@
 package Parser;
 import java_cup.runtime.Symbol; 
-
+import App.AppFrame;
 %% 
 %class Lexico
 %public 
@@ -19,6 +19,7 @@ D=[0-9]+
 DD=[0-9]+("."[  |0-9]+)?
 LETR = [A-Za-z0-9]
 ID =   [A-Za-z0-9_-]+
+RCONCOMA = [\!-\}](","[\!-\}])*
 T = \"([^\"])*\"
 CMUL = \<\!([^\"])*\!\>
 CUL = (\/)(\/)(.)*
@@ -60,6 +61,7 @@ CONCAT = (\.)
 {CS} {return new Symbol(sym.RECOMILLASIMPLE,yyline,yychar, yytext());}
 {CD} {return new Symbol(sym.RECOMILLASDOBLES,yyline,yychar, yytext());}
 {CONCAT} {return new Symbol(sym.CONCATENACION,yyline,yychar, yytext());}
+{RCONCOMA} {return new Symbol(sym.RRCONCOMA,yyline,yychar, yytext());}
 
 {CUL} {}
  
@@ -67,6 +69,7 @@ CONCAT = (\.)
 
 
 . {
+    AppFrame.tbErrores.setError(AppFrame.contadorErrores++, "Léxico", "No se esperaba "+yytext(), yyline, yychar);
     /*System.out.println("Este es un error lexico: "+yytext()+
     ", en la linea: "+yyline+", en la columna: "+yychar);*/
 }

@@ -8,31 +8,32 @@ package Parser;
 /** CUP generated class containing symbol constants. */
 public class sym {
   /* terminals */
-  public static final int DOSPT = 10;
-  public static final int CONCATENACION = 15;
-  public static final int RESALTOLINEA = 7;
-  public static final int CERRADURAINTER = 19;
-  public static final int DECIMAL = 22;
+  public static final int DOSPT = 11;
+  public static final int CONCATENACION = 16;
+  public static final int RESALTOLINEA = 8;
+  public static final int CERRADURAINTER = 20;
+  public static final int DECIMAL = 23;
   public static final int HASTA = 6;
-  public static final int REVALUAR = 24;
+  public static final int REVALUAR = 25;
   public static final int TODOS = 2;
-  public static final int UMENOS = 23;
-  public static final int ASIGN = 12;
-  public static final int CERRADURAMAS = 18;
-  public static final int RECOMILLASIMPLE = 8;
-  public static final int LLAVEIZQ = 13;
-  public static final int SEPARADOR = 20;
-  public static final int LLAVEDER = 14;
+  public static final int UMENOS = 24;
+  public static final int ASIGN = 13;
+  public static final int CERRADURAMAS = 19;
+  public static final int RECOMILLASIMPLE = 9;
+  public static final int LLAVEIZQ = 14;
+  public static final int SEPARADOR = 21;
+  public static final int LLAVEDER = 15;
   public static final int EOF = 0;
-  public static final int KLEEN = 17;
-  public static final int RECOMILLASDOBLES = 9;
+  public static final int KLEEN = 18;
+  public static final int RECOMILLASDOBLES = 10;
   public static final int SIMBOLO = 5;
   public static final int CONJ = 3;
-  public static final int DISYUNCION = 16;
+  public static final int DISYUNCION = 17;
   public static final int error = 1;
+  public static final int RRCONCOMA = 7;
   public static final int IDENTIFICADOR = 4;
-  public static final int ENTERO = 21;
-  public static final int PTCOMA = 11;
+  public static final int ENTERO = 22;
+  public static final int PTCOMA = 12;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -41,6 +42,7 @@ public class sym {
   "IDENTIFICADOR",
   "SIMBOLO",
   "HASTA",
+  "RRCONCOMA",
   "RESALTOLINEA",
   "RECOMILLASIMPLE",
   "RECOMILLASDOBLES",

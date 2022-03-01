@@ -10,8 +10,9 @@ parser code
      * Método al que se llama automáticamente ante algún error sintactico.
      **/ 
     public void syntax_error(Symbol s){ 
-        System.out.println("Error Sintáctico en la Línea " + (s.left) +
-        " Columna "+s.right+ ". No se esperaba este componente: " +s.value+"."); 
+        AppFrame.tbErrores.setError(AppFrame.contadorErrores++, "Sintactico", "Componente: "+s.value+" no reconocido", s.left, s.right);
+        /*System.out.println("Error Sintáctico en la Línea " + (s.left) +
+        " Columna "+s.right+ ". No se esperaba este componente: " +s.value+"."); */
     } 
 
     /**
@@ -19,9 +20,10 @@ parser code
      * en el que ya no es posible una recuperación de errores.
      **/ 
     public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{
-        System.out.println("Error síntactico irrecuperable en la Línea " + 
+        AppFrame.tbErrores.setError(AppFrame.contadorErrores++, "Sintactico", "Componente: "+s.value+" no reconocido", s.left, s.right);
+        /*System.out.println("Error síntactico irrecuperable en la Línea " + 
         (s.left)+ " Columna "+s.right+". Componente " + s.value + 
-        " no reconocido."); 
+        " no reconocido.");*/ 
     }  
 :} 
 
@@ -30,6 +32,7 @@ terminal String CONJ;
 terminal String IDENTIFICADOR;
 terminal String SIMBOLO;
 terminal String HASTA;
+terminal String RRCONCOMA;
 terminal String RESALTOLINEA, RECOMILLASIMPLE, RECOMILLASDOBLES;
 terminal String DOSPT, PTCOMA, ASIGN, LLAVEIZQ, LLAVEDER;
 terminal String CONCATENACION, DISYUNCION, KLEEN, CERRADURAMAS, CERRADURAINTER;
@@ -50,6 +53,7 @@ instr::= instrucciones instr
     | instrucciones operaciones;
 
 instrucciones::= CONJ DOSPT IDENTIFICADOR:a ASIGN SIMBOLO HASTA SIMBOLO PTCOMA{:System.out.println("Conjunto "+a);:}
+    | CONJ DOSPT IDENTIFICADOR:a ASIGN RRCONCOMA PTCOMA{:System.out.println("Conjunto "+a);:}
     | IDENTIFICADOR:a  ASIGN regex:b PTCOMA {:
         AppFrame.primeros = new ArrayList<Integer>();
         AppFrame.ultimos = new ArrayList<Integer>();

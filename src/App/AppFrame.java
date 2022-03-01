@@ -35,9 +35,13 @@ public class AppFrame extends javax.swing.JFrame {
     public static String path = "";
     public static int Contadorfiles = 0;
     public static int ContadorNodos = 0;
+    public static int ContadorAfn = 0;
     public static int identificador;
     public static int contadoraux = 0;
+    public static int contadorErrores = 1;
+    public static Errores.TablaErrores tbErrores = new Errores.TablaErrores();
     public static String aux = "";
+    public static String path2 = "";
     public static ArrayList<Integer> primeros;
     public static ArrayList<Integer> ultimos;
     public static Map<String, Arbol.Nodo> Arboles = new HashMap<String, Arbol.Nodo>();
@@ -45,8 +49,8 @@ public class AppFrame extends javax.swing.JFrame {
     public static Map<String, Transiciones.TablaTrans> TablasTR = new HashMap<String, Transiciones.TablaTrans>();
     public static ArrayList<Tabla.Siguiente> siguientes;
     public static ArrayList<Integer> auxiliarSigpor;
-    //public static ArrayList<Transiciones.TablaTrans> transTable;
     public static ArrayList<Transiciones.Estado> estados;
+    public static ArrayList<Errores.TablaErrores> TablasErrores = new ArrayList<Errores.TablaErrores>();
 
     /**
      * Creates new form AppFrame
@@ -262,6 +266,7 @@ public class AppFrame extends javax.swing.JFrame {
         if (seleccion == JFileChooser.APPROVE_OPTION) {
             File fichero = fc.getSelectedFile();
             path = fichero.getAbsolutePath();
+            path2 = fichero.getName();
             try ( FileReader fr = new FileReader(fichero)) {
                 String cadena = "";
                 int valor = fr.read();
@@ -311,6 +316,20 @@ public class AppFrame extends javax.swing.JFrame {
     private void EntradaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EntradaButtonActionPerformed
         try {
             interpretar(CodeArea.getText());
+            //Aqui se guardan las tablas de errores
+            tbErrores.setNombre(path2);
+            TablasErrores.add(tbErrores);
+            //Aqui se grafican las tablas de errores
+            
+            Grafica.TablaErrores tber = new Grafica.TablaErrores();
+            try {
+                tber.DrawTable(tbErrores, path2);
+            } catch (IOException ex) {
+                Logger.getLogger(AppFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            tbErrores = new Errores.TablaErrores();
+            path2 = "";
+            contadorErrores = 1;
         } catch (FileNotFoundException ex) {
             Logger.getLogger(AppFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
