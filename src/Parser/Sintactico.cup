@@ -10,9 +10,9 @@ parser code
      * Método al que se llama automáticamente ante algún error sintactico.
      **/ 
     public void syntax_error(Symbol s){ 
-        AppFrame.tbErrores.setError(AppFrame.contadorErrores++, "Sintactico", "Componente: "+s.value+" no reconocido", s.left, s.right);
-        /*System.out.println("Error Sintáctico en la Línea " + (s.left) +
-        " Columna "+s.right+ ". No se esperaba este componente: " +s.value+"."); */
+        AppFrame.tbErrores.setError(AppFrame.contadorErrores++, "Sintactico", "Componente: "+s.value+" no reconocido", s.left-1, s.right-2);
+        /*System.out.println("Error Sintáctico en la Línea " + ((s.left)-1) +
+        " Columna "+(s.right-1)+ ". No se esperaba este componente: " +s.value+"."); */
     } 
 
     /**
@@ -20,9 +20,9 @@ parser code
      * en el que ya no es posible una recuperación de errores.
      **/ 
     public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{
-        AppFrame.tbErrores.setError(AppFrame.contadorErrores++, "Sintactico", "Componente: "+s.value+" no reconocido", s.left, s.right);
+        AppFrame.tbErrores.setError(AppFrame.contadorErrores++, "Sintactico", "Componente: "+s.value+" no reconocido", s.left-1, s.right-2);
         /*System.out.println("Error síntactico irrecuperable en la Línea " + 
-        (s.left)+ " Columna "+s.right+". Componente " + s.value + 
+        ((s.left)-1)+ " Columna "+(s.right-1)+". Componente " + s.value + 
         " no reconocido.");*/ 
     }  
 :} 
@@ -47,14 +47,18 @@ non terminal operacion, operaciones;
 non terminal Nodo regex;
 start with inicio; 
 
-inicio ::= LLAVEIZQ instr LLAVEDER;
+inicio ::= LLAVEIZQ instr LLAVEDER
+    | error LLAVEDER
+;
 
 instr::= instrucciones instr
-    | instrucciones operaciones;
+    | instrucciones operaciones
+;
 
-instrucciones::= CONJ DOSPT IDENTIFICADOR:a ASIGN SIMBOLO HASTA SIMBOLO PTCOMA{:System.out.println("Conjunto "+a);:}
-    | CONJ DOSPT IDENTIFICADOR:a ASIGN RRCONCOMA PTCOMA{:System.out.println("Conjunto "+a);:}
+instrucciones::= CONJ DOSPT IDENTIFICADOR:a ASIGN SIMBOLO:b HASTA:c SIMBOLO:d PTCOMA{:AppFrame.conjuntos.put(a, b+c+d);:}
+    | CONJ DOSPT IDENTIFICADOR:a ASIGN RRCONCOMA:b PTCOMA{:AppFrame.conjuntos.put(a, b);:}
     | IDENTIFICADOR:a  ASIGN regex:b PTCOMA {:
+        AppFrame.expresiones.add(a);
         AppFrame.primeros = new ArrayList<Integer>();
         AppFrame.ultimos = new ArrayList<Integer>();
         AppFrame.identificador++;
@@ -86,14 +90,13 @@ instrucciones::= CONJ DOSPT IDENTIFICADOR:a ASIGN SIMBOLO HASTA SIMBOLO PTCOMA{:
         }
         AppFrame.Arboles.put(a ,new Nodo(".", AppFrame.ContadorNodos--, anul, AppFrame.primeros, AppFrame.ultimos, b, c));
 
-
-  
-
 :}
+    | error PTCOMA
 ;
 
 operaciones ::= operacion operaciones
     | operacion
+    | error PTCOMA
 ;
 
 operacion ::= IDENTIFICADOR DOSPT TODOS PTCOMA
@@ -163,6 +166,30 @@ regex ::= CONCATENACION:a regex:b regex:c{:
         
         RESULT = new Nodo(a, AppFrame.identificador, false,AppFrame.primeros, AppFrame.ultimos,null, null);:}
     | TODOS:a {:
+        AppFrame.primeros = new ArrayList<Integer>();
+        AppFrame.ultimos = new ArrayList<Integer>();
+        AppFrame.identificador++;
+        AppFrame.primeros.add(AppFrame.identificador);
+        AppFrame.ultimos.add(AppFrame.identificador);
+        
+        RESULT = new Nodo(a, AppFrame.identificador, false,AppFrame.primeros, AppFrame.ultimos,null, null);:}
+    | RESALTOLINEA:a {:
+        AppFrame.primeros = new ArrayList<Integer>();
+        AppFrame.ultimos = new ArrayList<Integer>();
+        AppFrame.identificador++;
+        AppFrame.primeros.add(AppFrame.identificador);
+        AppFrame.ultimos.add(AppFrame.identificador);
+        
+        RESULT = new Nodo(a, AppFrame.identificador, false,AppFrame.primeros, AppFrame.ultimos,null, null);:}
+    | RECOMILLASIMPLE:a {:
+        AppFrame.primeros = new ArrayList<Integer>();
+        AppFrame.ultimos = new ArrayList<Integer>();
+        AppFrame.identificador++;
+        AppFrame.primeros.add(AppFrame.identificador);
+        AppFrame.ultimos.add(AppFrame.identificador);
+        
+        RESULT = new Nodo(a, AppFrame.identificador, false,AppFrame.primeros, AppFrame.ultimos,null, null);:}
+    | RECOMILLASDOBLES:a {:
         AppFrame.primeros = new ArrayList<Integer>();
         AppFrame.ultimos = new ArrayList<Integer>();
         AppFrame.identificador++;
