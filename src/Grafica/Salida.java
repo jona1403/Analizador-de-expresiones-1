@@ -103,9 +103,9 @@ public class Salida {
             }
             
             if(aceptado){
-                txt+="        \"Resultado\": Aceptada por la expresion regular \n";
+                txt+="        \"Resultado\": \"Aceptada por la expresion regular\" \n";
             }else{
-                txt+="        \"Resultado\": No aceptada por la expresion regular \n";
+                txt+="        \"Resultado\": \"No aceptada por la expresion regular\" \n";
             }
             if(contador == App.AppFrame.expresionesEvaluar.size()){
                 txt +="    }\n";

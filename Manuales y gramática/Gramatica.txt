@@ -1,172 +1,34 @@
-terminal String TODOS;
-terminal String CONJ;
-terminal String IDENTIFICADOR;
-terminal String SIMBOLO;
-terminal String HASTA;
-terminal String RRCONCOMA;
-terminal String RESALTOLINEA, RECOMILLASIMPLE, RECOMILLASDOBLES;
-terminal String DOSPT, PTCOMA, ASIGN, LLAVEIZQ, LLAVEDER;
-terminal String CONCATENACION, DISYUNCION, KLEEN, CERRADURAMAS, CERRADURAINTER;
-terminal String SEPARADOR;
-terminal String ENTERO;
-terminal String DECIMAL;
-terminal String UMENOS;
-terminal String REVALUAR;
-
-non terminal inicio, instrucciones, instruccion, instr;
-non terminal operacion, operaciones;
-non terminal Nodo regex;
-start with inicio; 
-
-inicio ::= LLAVEIZQ instr LLAVEDER
-    | error LLAVEDER
+inicio ::= { instr }
+    | error }
 ;
 
 instr::= instrucciones instr
     | instrucciones operaciones
 ;
 
-instrucciones::= CONJ DOSPT IDENTIFICADOR:a ASIGN SIMBOLO:b HASTA:c SIMBOLO:d PTCOMA{:AppFrame.conjuntos.put(a, b+c+d);:}
-    | CONJ DOSPT IDENTIFICADOR:a ASIGN RRCONCOMA:b PTCOMA{:AppFrame.conjuntos.put(a, b);:}
-    | IDENTIFICADOR:a  ASIGN regex:b PTCOMA {:
-        AppFrame.expresiones.add(a);
-        AppFrame.primeros = new ArrayList<Integer>();
-        AppFrame.ultimos = new ArrayList<Integer>();
-        AppFrame.identificador++;
-        AppFrame.primeros.add(AppFrame.identificador);
-        AppFrame.ultimos.add(AppFrame.identificador);
-        Nodo c = new Nodo("#", AppFrame.identificador, false,AppFrame.primeros, AppFrame.ultimos, null, null);
-        AppFrame.identificador = 0;
-        
-
-
-        AppFrame.primeros = b.getPrimeros();
-        AppFrame.ultimos = new ArrayList<Integer>();    
-        boolean anul = false;
-        if(b.isAnulabilidad() && c.isAnulabilidad()){
-            anul = true;
-        }
-        if(b.isAnulabilidad()){
-            for(int i = 0; i<c.getPrimeros().size(); i++){
-                AppFrame.primeros.add(c.getPrimeros().get(i));
-            }
-        }
-        if(c.isAnulabilidad()){
-            AppFrame.ultimos = b.getUltimos();
-            for(int i = 0; i<c.getUltimos().size(); i++){
-                AppFrame.ultimos.add(c.getUltimos().get(i));
-            }
-        }else{
-            AppFrame.ultimos = c.getUltimos();
-        }
-        AppFrame.Arboles.put(a ,new Nodo(".", AppFrame.ContadorNodos--, anul, AppFrame.primeros, AppFrame.ultimos, b, c));
-
-:}
-    | error PTCOMA
+instrucciones::= CONJ : IDENTIFICADOR -> SIMBOLO ~ SIMBOLO ;
+    | CONJ : IDENTIFICADOR -> RRCONCOMA ;
+    | IDENTIFICADOR  -> regex ;
+    | error ;
 ;
 
 operaciones ::= operacion operaciones
     | operacion
-    | error PTCOMA
+    | error ;
 ;
 
-operacion ::= IDENTIFICADOR:a DOSPT TODOS:b PTCOMA {:
-    AppFrame.expresionesEvaluar.put(b, a);:}
+operacion ::= IDENTIFICADOR : TODOS ;
     | SEPARADOR
 ;
 
-regex ::= CONCATENACION:a regex:b regex:c{:
-        AppFrame.primeros = b.getPrimeros();
-        AppFrame.ultimos = new ArrayList<Integer>();    
-        boolean anul = false;
-        if(b.isAnulabilidad() && c.isAnulabilidad()){
-            anul = true;
-        }
-        if(b.isAnulabilidad()){
-            for(int i = 0; i<c.getPrimeros().size(); i++){
-                AppFrame.primeros.add(c.getPrimeros().get(i));
-            }
-        }
-        if(c.isAnulabilidad()){
-            AppFrame.ultimos = b.getUltimos();
-            for(int i = 0; i<c.getUltimos().size(); i++){
-                AppFrame.ultimos.add(c.getUltimos().get(i));
-            }
-        }else{
-            AppFrame.ultimos = c.getUltimos();
-        }
-        RESULT = new Nodo(a, AppFrame.ContadorNodos--, anul, AppFrame.primeros, AppFrame.ultimos, b, c);
-:}
-    | DISYUNCION:a regex:b regex:c{:
-        AppFrame.primeros = b.getPrimeros();
-        AppFrame.ultimos = b.getUltimos();
-        boolean anul = false;
-        if(b.isAnulabilidad() || c.isAnulabilidad()){
-            anul = true;
-        }
-        for(int i = 0; i<c.getPrimeros().size(); i++){
-            AppFrame.primeros.add(c.getPrimeros().get(i));
-        }
-        for(int i = 0; i<c.getUltimos().size(); i++){
-            AppFrame.ultimos.add(c.getUltimos().get(i));
-        }
-
-        RESULT = new Nodo(a, AppFrame.ContadorNodos--, anul, AppFrame.primeros, AppFrame.ultimos, b, c);
-:}
-    | KLEEN:a regex:b{:
-        AppFrame.primeros = b.getPrimeros();
-        AppFrame.ultimos = b.getUltimos();
-        RESULT= new Nodo(a, AppFrame.ContadorNodos--, true, AppFrame.primeros, AppFrame.ultimos, null, b);    
-:}
-    | CERRADURAMAS:a regex:b{:
-        AppFrame.primeros = b.getPrimeros();
-        AppFrame.ultimos = b.getUltimos();
-        boolean anul = b.isAnulabilidad();
-        RESULT= new Nodo(a, AppFrame.ContadorNodos--, anul, AppFrame.primeros, AppFrame.ultimos, null, b);
-:}
-    | CERRADURAINTER:a regex:b {:
-        AppFrame.primeros = b.getPrimeros();
-        AppFrame.ultimos = b.getUltimos();
-        RESULT= new Nodo(a, AppFrame.ContadorNodos--, true, AppFrame.primeros, AppFrame.ultimos, null, b);
-:}
-    | LLAVEIZQ IDENTIFICADOR:a LLAVEDER {:
-        AppFrame.primeros = new ArrayList<Integer>();
-        AppFrame.ultimos = new ArrayList<Integer>();
-        AppFrame.identificador++;
-        AppFrame.primeros.add(AppFrame.identificador);
-        AppFrame.ultimos.add(AppFrame.identificador);
-        
-        RESULT = new Nodo(a, AppFrame.identificador, false,AppFrame.primeros, AppFrame.ultimos,null, null);:}
-    | TODOS:a {:
-        AppFrame.primeros = new ArrayList<Integer>();
-        AppFrame.ultimos = new ArrayList<Integer>();
-        AppFrame.identificador++;
-        AppFrame.primeros.add(AppFrame.identificador);
-        AppFrame.ultimos.add(AppFrame.identificador);
-        
-        RESULT = new Nodo(a, AppFrame.identificador, false,AppFrame.primeros, AppFrame.ultimos,null, null);:}
-    | RESALTOLINEA:a {:
-        AppFrame.primeros = new ArrayList<Integer>();
-        AppFrame.ultimos = new ArrayList<Integer>();
-        AppFrame.identificador++;
-        AppFrame.primeros.add(AppFrame.identificador);
-        AppFrame.ultimos.add(AppFrame.identificador);
-        
-        RESULT = new Nodo(a, AppFrame.identificador, false,AppFrame.primeros, AppFrame.ultimos,null, null);:}
-    | RECOMILLASIMPLE:a {:
-        AppFrame.primeros = new ArrayList<Integer>();
-        AppFrame.ultimos = new ArrayList<Integer>();
-        AppFrame.identificador++;
-        AppFrame.primeros.add(AppFrame.identificador);
-        AppFrame.ultimos.add(AppFrame.identificador);
-        
-        RESULT = new Nodo(a, AppFrame.identificador, false,AppFrame.primeros, AppFrame.ultimos,null, null);:}
-    | RECOMILLASDOBLES:a {:
-        AppFrame.primeros = new ArrayList<Integer>();
-        AppFrame.ultimos = new ArrayList<Integer>();
-        AppFrame.identificador++;
-        AppFrame.primeros.add(AppFrame.identificador);
-        AppFrame.ultimos.add(AppFrame.identificador);
-        
-        RESULT = new Nodo(a, AppFrame.identificador, false,AppFrame.primeros, AppFrame.ultimos,null, null);:}
+regex ::= CONCATENACION regex regex
+    | DISYUNCION regex regex
+    | KLEEN regex
+    | CERRADURAMAS regex
+    | CERRADURAINTER regex 
+    | { IDENTIFICADOR } 
+    | TODOS 
+    | RESALTOLINEA 
+    | RECOMILLASIMPLE 
+    | RECOMILLASDOBLES 
 ;
