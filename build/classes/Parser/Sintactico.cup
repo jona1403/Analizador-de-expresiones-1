@@ -99,7 +99,8 @@ operaciones ::= operacion operaciones
     | error PTCOMA
 ;
 
-operacion ::= IDENTIFICADOR DOSPT TODOS PTCOMA
+operacion ::= IDENTIFICADOR:a DOSPT TODOS:b PTCOMA {:
+    AppFrame.expresionesEvaluar.put(b, a);:}
     | SEPARADOR
 ;
 

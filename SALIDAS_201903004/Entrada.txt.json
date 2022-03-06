@@ -1,0 +1,17 @@
+[
+    {
+        "Valor": "primerLexemaCokoa",
+        "ExpresionRegular": "ExpReg1",
+        "Resultado": Aceptada por la expresion regular 
+    }, 
+    {
+        "Valor": "34.44",
+        "ExpresionRegular": "ExpresionReg2",
+        "Resultado": No aceptada por la expresion regular 
+    }, 
+    {
+        "Valor": "1primerLexemaCokoa",
+        "ExpresionRegular": "ExpReg1",
+        "Resultado": No aceptada por la expresion regular 
+    }
+]
