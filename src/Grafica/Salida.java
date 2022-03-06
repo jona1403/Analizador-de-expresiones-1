@@ -5,6 +5,7 @@
  */
 package Grafica;
 
+import App.AppFrame;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -30,7 +31,9 @@ public class Salida {
         
         for (Iterator<Map.Entry<String, String>> entries = App.AppFrame.expresionesEvaluar.entrySet().iterator(); entries.hasNext();) {
             contador++;
+            
             Map.Entry<String, String> entry = entries.next();
+            int finn = App.AppFrame.Arboles.get(entry.getValue()).getDerecha().getIdentificador();
             txt+= "    {\n";
             
             txt+="        \"Valor\": "+entry.getKey()+ ",\n";
@@ -96,7 +99,8 @@ public class Salida {
                             break;
                         }
                     }
-                    if(i == chars.length-2 && caracteraceptado){
+                    Grafica.AFD af = new Grafica.AFD();
+                    if(i == chars.length-2 && caracteraceptado && af.esAceptacion(est.getLista(), finn)){
                         aceptado = true;
                     }
                 }

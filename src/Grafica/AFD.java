@@ -87,7 +87,7 @@ public class AFD {
         }
     }
 
-    private boolean esAceptacion(ArrayList<Integer> lista, int fin) {
+    public boolean esAceptacion(ArrayList<Integer> lista, int fin) {
         for (int i = 0; i < lista.size(); i++) {
             if (lista.get(i).equals(fin)) {
                 return true;

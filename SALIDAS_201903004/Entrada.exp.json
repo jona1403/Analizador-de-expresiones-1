@@ -1,12 +1,17 @@
 [
     {
-        "Valor": "44.44",
+        "Valor": ".a.uaeioa",
+        "ExpresionRegular": "Expresionvoc",
+        "Resultado": "No aceptada por la expresion regular" 
+    }, 
+    {
+        "Valor": "4.44",
         "ExpresionRegular": "ExpresionReg2",
         "Resultado": "Aceptada por la expresion regular" 
     }, 
     {
-        "Valor": "primerLexemaCokoa",
+        "Valor": ".primerLexemaCokoa",
         "ExpresionRegular": "ExpReg1",
-        "Resultado": "Aceptada por la expresion regular" 
+        "Resultado": "No aceptada por la expresion regular" 
     }
 ]
