@@ -1,0 +1,26 @@
+digraph structs {
+    node [shape=record];-22[label="[1]|{false|{.}|id: 0}|[5]"];
+-21[label="[1]|{false|{.}|id: 0}|[1, 2, 3, 4]"];
+1[label="1|{false|{letra}|id: 1}|1"];
+-21[label="[1]|{false|{.}|id: 0}|[1, 2, 3, 4]"];
+-20[label="[2, 3, 4]|{true|{*}|id: 0}|[2, 3, 4]"];
+-19[label="[2, 3, 4]|{false|{|}|id: 0}|[2, 3, 4]"];
+2[label="2|{false|{numero}|id: 2}|2"];
+-19[label="[2, 3, 4]|{false|{|}|id: 0}|[2, 3, 4]"];
+-18[label="[3, 4]|{false|{|}|id: 0}|[3, 4]"];
+3[label="3|{false|{letra}|id: 3}|3"];
+-18[label="[3, 4]|{false|{|}|id: 0}|[3, 4]"];
+4[label="4|{false|{numero2}|id: 4}|4"];
+-22[label="[1]|{false|{.}|id: 0}|[5]"];
+5[label="5|{false|{#}|id: 5}|5"];
+-22 -> -21;
+-21 -> 1;
+-21 -> -20;
+-20 -> -19;
+-19 -> 2;
+-19 -> -18;
+-18 -> 3;
+-18 -> 4;
+-22 -> 5;
+
+}

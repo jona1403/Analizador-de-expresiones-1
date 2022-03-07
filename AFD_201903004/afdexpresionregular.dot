@@ -5,7 +5,8 @@ rankdir=LR
 S0[shape=circle fixedsize=true]
 S1[shape=circle fixedsize=true]
 S2[shape=doublecircle fixedsize=true]}
-S0 -> S1[label= vocales]
-S1 -> S2[label= "."]
-S2 -> S2[label= vocales]
+S0 -> S1[label= "a"]
+S1 -> S1[label= impar]
+S1 -> S1[label= letrac]
+S1 -> S2[label= "b"]
  }

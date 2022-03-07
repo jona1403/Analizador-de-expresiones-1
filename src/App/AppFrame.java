@@ -173,7 +173,7 @@ public class AppFrame extends javax.swing.JFrame {
         ExitArea.setRows(5);
         jScrollPane2.setViewportView(ExitArea);
 
-        jTree1.setModel(new FileSystemModel(new File("C:\\Users\\HUGO\\Desktop\\ExpAnalyzer")));
+        jTree1.setModel(new FileSystemModel(new File("C:\\Users\\HUGO\\Desktop\\-OLC1-P1_201903004")));
         jTree1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTree1MouseClicked(evt);
@@ -238,7 +238,6 @@ public class AppFrame extends javax.swing.JFrame {
                         .addGap(12, 12, 12)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(28, 28, 28)
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -359,7 +358,7 @@ public class AppFrame extends javax.swing.JFrame {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(AppFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        jTree1.setModel(new FileSystemModel(new File("C:\\Users\\HUGO\\Desktop\\ExpAnalyzer")));
+        jTree1.setModel(new FileSystemModel(new File("C:\\Users\\HUGO\\Desktop\\-OLC1-P1_201903004")));
     }//GEN-LAST:event_EntradaButtonActionPerformed
 
     private void AutomatasButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AutomatasButtonActionPerformed
@@ -386,7 +385,7 @@ public class AppFrame extends javax.swing.JFrame {
             grafd.dibujarArbol(tbl, entry.getValue().getDerecha().getIdentificador(), entry.getKey());
             tbl = new TablaTrans();
         }
-        jTree1.setModel(new FileSystemModel(new File("C:\\Users\\HUGO\\Desktop\\ExpAnalyzer")));
+        jTree1.setModel(new FileSystemModel(new File("C:\\Users\\HUGO\\Desktop\\-OLC1-P1_201903004")));
     }//GEN-LAST:event_AutomatasButtonActionPerformed
 
     private void jTree1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTree1MouseClicked

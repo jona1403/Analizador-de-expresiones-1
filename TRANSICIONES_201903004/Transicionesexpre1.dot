@@ -1,0 +1,4 @@
+ digraph html {
+abc [shape=none, margin=0, label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4"><tr><td>Estado</td   ><td>letra</td><td>numero</td><td>numero2</td></tr><tr><td>S0[1]</td><td>S1</td><td>--</td><td>--</td></tr><tr><td>S1[2, 3, 4, 5]</td><td>S1</td><td>S1</td><td>S1</td></tr></TABLE>>];
+}

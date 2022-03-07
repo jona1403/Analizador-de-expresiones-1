@@ -22,9 +22,9 @@ public class Arbol {
         if(nodo != null){
             if(nodo.getIzquierda() == null && nodo.getDerecha() == null){
                 if(nodo.getValor().length()== 3){
-                    txt += String.valueOf(nodo.getIdentificador())+"[label=\""+nodo.getPrimeros()+"|{"+nodo.isAnulabilidad()+"|{"+nodo.getValor().substring(1, nodo.getValor().length()-1)+"}|"+"id: "+nodo.getIdentificador()+"}"+"|"+nodo.getUltimos()+"\"];\n";
+                    txt += String.valueOf(nodo.getIdentificador())+"[label=\""+nodo.getIdentificador()+"|{"+nodo.isAnulabilidad()+"|{"+nodo.getValor().substring(1, nodo.getValor().length()-1)+"}|"+"id: "+nodo.getIdentificador()+"}"+"|"+nodo.getIdentificador()+"\"];\n";
                 }else{
-                    txt += String.valueOf(nodo.getIdentificador())+"[label=\""+nodo.getPrimeros()+"|{"+nodo.isAnulabilidad()+"|{"+nodo.getValor()+"}|"+"id: "+nodo.getIdentificador()+"}"+"|"+nodo.getUltimos()+"\"];\n";
+                    txt += String.valueOf(nodo.getIdentificador())+"[label=\""+nodo.getIdentificador()+"|{"+nodo.isAnulabilidad()+"|{"+nodo.getValor()+"}|"+"id: "+nodo.getIdentificador()+"}"+"|"+nodo.getIdentificador()+"\"];\n";
                 }
                 
             }else{

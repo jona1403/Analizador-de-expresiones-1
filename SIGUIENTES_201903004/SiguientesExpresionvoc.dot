@@ -1,4 +1,0 @@
- digraph html {
-abc [shape=none, margin=0, label=<
-<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4"><tr><td>HOJA</td><td>HOJA</td><td>SIGUIENTES</td></tr><tr><td>vocales</td><td>1</td><td>[2]</td></tr><tr><td>"."</td><td>2</td><td>[3, 4]</td></tr><tr><td>vocales</td><td>3</td><td>[3, 4]</td></tr><tr><td>#</td><td>4</td><td>[]</td></tr></TABLE>>];
-}
